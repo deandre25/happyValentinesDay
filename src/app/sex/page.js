@@ -78,7 +78,7 @@ export default function DragAndDropPage() {
       </div>
 
       {/* Блоки для перетаскивания */}
-      <div className="flex flex-wrap gap-6 mb-8 justify-center">
+      <div className="flex flex-wrap gap-4 sm:gap-6 mb-8 justify-center">
         {blocks.map((block, index) => (
           <div
             key={index}
@@ -103,9 +103,9 @@ export default function DragAndDropPage() {
       {/* Список пар */}
       <div className="text-white mt-10 w-full max-w-xl">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6 text-center">Your Pairs:</h2>
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {pairs.map((pair, index) => (
-            <div key={index} className="flex items-center space-x-12 bg-white p-4 rounded-lg shadow-xl border-2 border-pink-300">
+            <div key={index} className="flex items-center space-x-6 sm:space-x-12 bg-white p-4 rounded-lg shadow-xl border-2 border-pink-300">
               <div className="flex items-center space-x-6 sm:space-x-12 justify-between">
                 <div className="flex flex-col items-center justify-between">
                   <Image
@@ -135,8 +135,7 @@ export default function DragAndDropPage() {
               <span className="font-medium text-xl text-gray-400">=</span>
 
               <div className="flex items-center justify-center space-x-2">
-                <span className="font-bold text-lg sm:text-xl">Pair {index + 1}</span>
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-red-500 flex items-center justify-center text-white text-2xl sm:text-3xl font-semibold">❤️</div>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-red-500 flex items-center justify-center text-white text-xl sm:text-2xl font-semibold">❤️</div>
               </div>
             </div>
           ))}
