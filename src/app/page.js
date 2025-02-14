@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-// Лоадер в виде сердца
 const HeartLoader = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-pink-400 via-red-400 to-purple-500">
@@ -32,7 +31,6 @@ const HeartLoader = () => {
   );
 };
 
-// Стиль для анимации
 const loaderStyles = `
   .heart-loader {
     animation: fillHeart 3s ease-in-out infinite;
@@ -66,10 +64,9 @@ const loaderStyles = `
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
-  // Эмуляция загрузки страницы
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoading(false);  // После 2 секунд скрываем лоадер
+      setLoading(false); 
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -77,7 +74,7 @@ const HomePage = () => {
 
   return (
     <>
-      <style>{loaderStyles}</style> {/* Вставляем стили для лоадера */}
+      <style>{loaderStyles}</style>
       {loading ? (
         <HeartLoader />
       ) : (
