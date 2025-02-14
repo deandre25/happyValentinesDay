@@ -1,0 +1,30 @@
+/* Стили для лоадера */
+.heart-loader {
+  animation: fillHeart 3s ease-in-out infinite;
+  transform: rotate(-45deg);
+}
+
+/* Путь, который будет заполняться */
+.heart-path {
+  fill: transparent;
+  stroke: red;
+  stroke-width: 5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dashHeart 3s ease-in-out infinite;
+}
+
+/* Анимация для заполнения */
+@keyframes dashHeart {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    fill: red; /* Наполняем сердце кровью */
+  }
+  100% {
+    stroke-dashoffset: 1000;
+    fill: red;
+  }
+}
