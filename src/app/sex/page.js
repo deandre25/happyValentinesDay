@@ -16,94 +16,91 @@ export default function DragAndDropPage() {
 
   const [blocks, setBlocks] = useState([null, null]);
   const [pairs, setPairs] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null); // Для выбранной картинки
 
-  const handleDrop = (imageId, blockIndex) => {
-    if (blocks[blockIndex] === null) {
-      const selectedImage = images.find((img) => img.id === imageId);
+  // Выбор картинки при клике
+  const handleImageClick = (imageId) => {
+    setSelectedImage(imageId); // Устанавливаем выбранную картинку
+  };
+
+  // Добавление картинки в блок при клике на блок
+  const handleBlockClick = (blockIndex) => {
+    if (selectedImage !== null) {
+      const selectedImageObj = images.find(img => img.id === selectedImage);
       const newBlocks = [...blocks];
-      newBlocks[blockIndex] = selectedImage;
+      newBlocks[blockIndex] = selectedImageObj; // Добавляем картинку в блок
       setBlocks(newBlocks);
 
-      setImages((prevImages) => prevImages.filter((img) => img.id !== imageId));
+      setImages((prevImages) => prevImages.filter((img) => img.id !== selectedImage)); // Убираем картинку из списка
 
       if (newBlocks[0] && newBlocks[1]) {
         setPairs((prevPairs) => [...prevPairs, { left: newBlocks[0], right: newBlocks[1] }]);
-        setBlocks([null, null]);
+        setBlocks([null, null]);  // Очищаем блоки после создания пары
       }
+
+      setSelectedImage(null);  // Сбрасываем выбранную картинку
     }
-  };
-
-  const handleDragStart = (e, imageId) => {
-    e.dataTransfer.setData("imageId", imageId);
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDropEvent = (e, blockIndex) => {
-    e.preventDefault();
-    const imageId = parseInt(e.dataTransfer.getData("imageId"), 10);
-    handleDrop(imageId, blockIndex);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-pink-500 via-red-500 to-purple-600 flex flex-col items-center justify-center p-4 sm:p-8">
       
       {/* Кнопка "Назад" */}
-      <div className="absolute top-6 left-6 sm:top-8 sm:left-8">
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
         <Link href="/" passHref>
-          <button className="bg-pink-600 text-white px-4 py-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <button className="bg-pink-600 text-white px-4 py-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 text-sm sm:text-base">
             Back
           </button>
         </Link>
       </div>
 
-      <h1 className="text-4xl sm:text-5xl font-bold mb-6 text-center">Happy Valentine’s Day! 💖</h1>
+      <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-center">Happy Valentine’s Day! 💖</h1>
 
-      <p className="text-xl sm:text-2xl mb-8 text-center">Celebrate love by matching images together!</p>
+      <p className="text-lg sm:text-2xl mb-8 text-center">Celebrate love by matching images together!</p>
 
-      <div className="flex flex-wrap gap-6 mb-6 justify-center">
+      {/* Выбор картинок */}
+      <div className="flex flex-wrap gap-4 sm:gap-6 mb-6 justify-center">
         {images.map((image) => (
-          <div key={image.id} className="relative w-20 h-20 sm:w-24 sm:h-24">
+          <div
+            key={image.id}
+            className="relative w-16 h-16 sm:w-24 sm:h-24 cursor-pointer"
+            onClick={() => handleImageClick(image.id)}  // При клике выбираем картинку (для мобильных)
+          >
             <Image
               layout="fill"
               objectFit="cover"
               src={image.src}
               alt={`Image ${image.id}`}
-              draggable
-              onDragStart={(e) => handleDragStart(e, image.id)}
               className="rounded-lg shadow-lg border-2 border-white"
             />
           </div>
         ))}
       </div>
 
-      {images.length > 0 ? (
-        <div className="flex flex-wrap gap-8 mb-8 justify-center">
-          {blocks.map((block, index) => (
-            <div
-              key={index}
-              onDragOver={handleDragOver}
-              onDrop={(e) => handleDropEvent(e, index)}
-              className="relative w-32 h-32 sm:w-36 sm:h-36 border-4 border-dashed border-white flex items-center justify-center rounded-lg bg-white bg-opacity-50 mb-4"
-            >
-              {block ? (
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  src={block.src}
-                  alt={`Block ${block.id}`}
-                  className="rounded-lg"
-                />
-              ) : (
-                <span className="text-white text-xl">Drop Here 💌</span>
-              )}
-            </div>
-          ))}
-        </div>
-      ) : null}
+      {/* Блоки для перетаскивания */}
+      <div className="flex flex-wrap gap-6 mb-8 justify-center">
+        {blocks.map((block, index) => (
+          <div
+            key={index}
+            onClick={() => handleBlockClick(index)}  // При клике на блок помещаем картинку в блок
+            className="relative w-32 h-32 sm:w-36 sm:h-36 border-4 border-dashed border-white flex items-center justify-center rounded-lg bg-white bg-opacity-50 mb-4 cursor-pointer"
+          >
+            {block ? (
+              <Image
+                layout="fill"
+                objectFit="cover"
+                src={block.src}
+                alt={`Block ${block.id}`}
+                className="rounded-lg"
+              />
+            ) : (
+              <span className="text-white text-xl">Drop Here 💌</span>
+            )}
+          </div>
+        ))}
+      </div>
 
+      {/* Список пар */}
       <div className="text-white mt-10 w-full max-w-xl">
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6 text-center">Your Pairs:</h2>
         <div className="space-y-6">
