@@ -118,12 +118,12 @@ export default function DragAndDropPage() {
         <h2 className="text-3xl sm:text-4xl font-semibold mb-6 text-center">Your Pairs:</h2>
         <div className="space-y-4 sm:space-y-6">
           {pairs.map((pair, index) => (
-            <div key={index} className="flex items-center space-x-6 sm:space-x-12 bg-white p-4 rounded-lg shadow-xl border-2 border-pink-300">
-              <div className="flex items-center space-x-6 sm:space-x-12 justify-between">
+            <div key={index} className="flex items-center space-x-4 sm:space-x-6 bg-white p-4 rounded-lg shadow-xl border-2 border-pink-300">
+              <div className="flex items-center space-x-4 sm:space-x-6 justify-between">
                 <div className="flex flex-col items-center justify-between">
                   <Image
-                    width={100}
-                    height={100}
+                    width={80}
+                    height={80}
                     objectFit="cover"
                     src={pair.left.src}
                     alt={`Pair Left ${pair.left.id}`}
@@ -131,11 +131,11 @@ export default function DragAndDropPage() {
                   />
                   <span className="text-sm sm:text-base font-medium text-blue-600">{pair.left.name}</span>
                 </div>
-                <span className="font-medium text-xl text-yellow-400">+</span>
+                <span className="font-medium text-lg text-yellow-400">+</span>
                 <div className="flex flex-col items-center">
                   <Image
-                    width={100}
-                    height={100}
+                    width={80}
+                    height={80}
                     objectFit="cover"
                     src={pair.right.src}
                     alt={`Pair Right ${pair.right.id}`}
